@@ -1,18 +1,16 @@
 import {Observable, Observer} from 'rxjs';
-import {filter, map} from "rxjs/operators";
-import {isNumeric} from "rxjs/internal-compatibility";
 
 
 const myObserver: Observer<any> = {
     next(x: number) {
-        if (isNumeric(x)) {
+        if (isNaN(x)) {
             console.log(x + 10);
         } else {
             console.log('No es un numero')
         }
     },
     error(err) {
-        console.error('[Error] => ', err);
+        console.log('Error papa', err);
     },
     complete() {
         console.log('Trabajo terminado')
@@ -25,7 +23,7 @@ const myObservable = new Observable(subscriber => {
     subscriber.next(1);
     subscriber.next(2);
     subscriber.next(3);
-    subscriber.error('error from observable');
+    subscriber.error('error');
 });
 
 const myObservable2 = new Observable(subscriber => {
@@ -34,4 +32,3 @@ const myObservable2 = new Observable(subscriber => {
 
 myObservable.subscribe(myObserver);
 myObservable2.subscribe(myObserver);
-
